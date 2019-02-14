@@ -39,6 +39,7 @@
                                     <th>Estado</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <tr v-for="articulo in arrayArticulo" :key="articulo.id">
                                     <td>
