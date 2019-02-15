@@ -60,5 +60,6 @@ class ClienteController extends Controller
         $persona->telefono = $request->telefono;
         $persona->email = $request->email;
         $persona->save();
+        
     }
 }
