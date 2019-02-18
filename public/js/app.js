@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,8 +70,31 @@
 "use strict";
 
 
-var bind = __webpack_require__(14);
-var isBuffer = __webpack_require__(35);
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Barcode = function Barcode(data, options) {
+	_classCallCheck(this, Barcode);
+
+	this.data = data;
+	this.text = options.text || data;
+	this.options = options;
+};
+
+exports.default = Barcode;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(13);
+var isBuffer = __webpack_require__(32);
 
 /*global toString:true*/
 
@@ -374,266 +397,7 @@ module.exports = {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Barcode = function Barcode(data, options) {
-	_classCallCheck(this, Barcode);
-
-	this.data = data;
-	this.text = options.text || data;
-	this.options = options;
-};
-
-exports.default = Barcode;
-
-/***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _SET_BY_CODE;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-// constants for internal usage
-var SET_A = exports.SET_A = 0;
-var SET_B = exports.SET_B = 1;
-var SET_C = exports.SET_C = 2;
-
-// Special characters
-var SHIFT = exports.SHIFT = 98;
-var START_A = exports.START_A = 103;
-var START_B = exports.START_B = 104;
-var START_C = exports.START_C = 105;
-var MODULO = exports.MODULO = 103;
-var STOP = exports.STOP = 106;
-var FNC1 = exports.FNC1 = 207;
-
-// Get set by start code
-var SET_BY_CODE = exports.SET_BY_CODE = (_SET_BY_CODE = {}, _defineProperty(_SET_BY_CODE, START_A, SET_A), _defineProperty(_SET_BY_CODE, START_B, SET_B), _defineProperty(_SET_BY_CODE, START_C, SET_C), _SET_BY_CODE);
-
-// Get next set by code
-var SWAP = exports.SWAP = {
-	101: SET_A,
-	100: SET_B,
-	99: SET_C
-};
-
-var A_START_CHAR = exports.A_START_CHAR = String.fromCharCode(208); // START_A + 105
-var B_START_CHAR = exports.B_START_CHAR = String.fromCharCode(209); // START_B + 105
-var C_START_CHAR = exports.C_START_CHAR = String.fromCharCode(210); // START_C + 105
-
-// 128A (Code Set A)
-// ASCII characters 00 to 95 (0–9, A–Z and control codes), special characters, and FNC 1–4
-var A_CHARS = exports.A_CHARS = "[\x00-\x5F\xC8-\xCF]";
-
-// 128B (Code Set B)
-// ASCII characters 32 to 127 (0–9, A–Z, a–z), special characters, and FNC 1–4
-var B_CHARS = exports.B_CHARS = "[\x20-\x7F\xC8-\xCF]";
-
-// 128C (Code Set C)
-// 00–99 (encodes two digits with a single code point) and FNC1
-var C_CHARS = exports.C_CHARS = "(\xCF*[0-9]{2}\xCF*)";
-
-// CODE128 includes 107 symbols:
-// 103 data symbols, 3 start symbols (A, B and C), and 1 stop symbol (the last one)
-// Each symbol consist of three black bars (1) and three white spaces (0).
-var BARS = exports.BARS = [11011001100, 11001101100, 11001100110, 10010011000, 10010001100, 10001001100, 10011001000, 10011000100, 10001100100, 11001001000, 11001000100, 11000100100, 10110011100, 10011011100, 10011001110, 10111001100, 10011101100, 10011100110, 11001110010, 11001011100, 11001001110, 11011100100, 11001110100, 11101101110, 11101001100, 11100101100, 11100100110, 11101100100, 11100110100, 11100110010, 11011011000, 11011000110, 11000110110, 10100011000, 10001011000, 10001000110, 10110001000, 10001101000, 10001100010, 11010001000, 11000101000, 11000100010, 10110111000, 10110001110, 10001101110, 10111011000, 10111000110, 10001110110, 11101110110, 11010001110, 11000101110, 11011101000, 11011100010, 11011101110, 11101011000, 11101000110, 11100010110, 11101101000, 11101100010, 11100011010, 11101111010, 11001000010, 11110001010, 10100110000, 10100001100, 10010110000, 10010000110, 10000101100, 10000100110, 10110010000, 10110000100, 10011010000, 10011000010, 10000110100, 10000110010, 11000010010, 11001010000, 11110111010, 11000010100, 10001111010, 10100111100, 10010111100, 10010011110, 10111100100, 10011110100, 10011110010, 11110100100, 11110010100, 11110010010, 11011011110, 11011110110, 11110110110, 10101111000, 10100011110, 10001011110, 10111101000, 10111100010, 11110101000, 11110100010, 10111011110, 10111101110, 11101011110, 11110101110, 11010000100, 11010010000, 11010011100, 1100011101011];
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-// Standard start end and middle bits
-var SIDE_BIN = exports.SIDE_BIN = '101';
-var MIDDLE_BIN = exports.MIDDLE_BIN = '01010';
-
-var BINARIES = exports.BINARIES = {
-	'L': [// The L (left) type of encoding
-	'0001101', '0011001', '0010011', '0111101', '0100011', '0110001', '0101111', '0111011', '0110111', '0001011'],
-	'G': [// The G type of encoding
-	'0100111', '0110011', '0011011', '0100001', '0011101', '0111001', '0000101', '0010001', '0001001', '0010111'],
-	'R': [// The R (right) type of encoding
-	'1110010', '1100110', '1101100', '1000010', '1011100', '1001110', '1010000', '1000100', '1001000', '1110100'],
-	'O': [// The O (odd) encoding for UPC-E
-	'0001101', '0011001', '0010011', '0111101', '0100011', '0110001', '0101111', '0111011', '0110111', '0001011'],
-	'E': [// The E (even) encoding for UPC-E
-	'0100111', '0110011', '0011011', '0100001', '0011101', '0111001', '0000101', '0010001', '0001001', '0010111']
-};
-
-// Define the EAN-2 structure
-var EAN2_STRUCTURE = exports.EAN2_STRUCTURE = ['LL', 'LG', 'GL', 'GG'];
-
-// Define the EAN-5 structure
-var EAN5_STRUCTURE = exports.EAN5_STRUCTURE = ['GGLLL', 'GLGLL', 'GLLGL', 'GLLLG', 'LGGLL', 'LLGGL', 'LLLGG', 'LGLGL', 'LGLLG', 'LLGLG'];
-
-// Define the EAN-13 structure
-var EAN13_STRUCTURE = exports.EAN13_STRUCTURE = ['LLLLLL', 'LLGLGG', 'LLGGLG', 'LLGGGL', 'LGLLGG', 'LGGLLG', 'LGGGLL', 'LGLGLG', 'LGLGGL', 'LGGLGL'];
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _constants = __webpack_require__(3);
-
-// Encode data string
-var encode = function encode(data, structure, separator) {
-	var encoded = data.split('').map(function (val, idx) {
-		return _constants.BINARIES[structure[idx]];
-	}).map(function (val, idx) {
-		return val ? val[data[idx]] : '';
-	});
-
-	if (separator) {
-		var last = data.length - 1;
-		encoded = encoded.map(function (val, idx) {
-			return idx < last ? val + separator : val;
-		});
-	}
-
-	return encoded.join('');
-};
-
-exports.default = encode;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Barcode2 = __webpack_require__(1);
-
-var _Barcode3 = _interopRequireDefault(_Barcode2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation
-// https://en.wikipedia.org/wiki/MSI_Barcode#Character_set_and_binary_lookup
-
-var MSI = function (_Barcode) {
-	_inherits(MSI, _Barcode);
-
-	function MSI(data, options) {
-		_classCallCheck(this, MSI);
-
-		return _possibleConstructorReturn(this, (MSI.__proto__ || Object.getPrototypeOf(MSI)).call(this, data, options));
-	}
-
-	_createClass(MSI, [{
-		key: "encode",
-		value: function encode() {
-			// Start bits
-			var ret = "110";
-
-			for (var i = 0; i < this.data.length; i++) {
-				// Convert the character to binary (always 4 binary digits)
-				var digit = parseInt(this.data[i]);
-				var bin = digit.toString(2);
-				bin = addZeroes(bin, 4 - bin.length);
-
-				// Add 100 for every zero and 110 for every 1
-				for (var b = 0; b < bin.length; b++) {
-					ret += bin[b] == "0" ? "100" : "110";
-				}
-			}
-
-			// End bits
-			ret += "1001";
-
-			return {
-				data: ret,
-				text: this.text
-			};
-		}
-	}, {
-		key: "valid",
-		value: function valid() {
-			return this.data.search(/^[0-9]+$/) !== -1;
-		}
-	}]);
-
-	return MSI;
-}(_Barcode3.default);
-
-function addZeroes(number, n) {
-	for (var i = 0; i < n; i++) {
-		number = "0" + number;
-	}
-	return number;
-}
-
-exports.default = MSI;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 /*
@@ -715,7 +479,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 8 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -734,7 +498,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(58)
+var listToStyles = __webpack_require__(55)
 
 /*
 type StyleObject = {
@@ -943,7 +707,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 9 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -1052,7 +816,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 10 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1064,11 +828,253 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Barcode2 = __webpack_require__(1);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EANencoder = function () {
+	function EANencoder() {
+		_classCallCheck(this, EANencoder);
+
+		// Standard start end and middle bits
+		this.startBin = "101";
+		this.endBin = "101";
+		this.middleBin = "01010";
+
+		this.binaries = {
+			// The L (left) type of encoding
+			"L": ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"],
+
+			// The G type of encoding
+			"G": ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"],
+
+			// The R (right) type of encoding
+			"R": ["1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100"],
+
+			// The O (odd) encoding for UPC-E
+			"O": ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"],
+
+			// The E (even) encoding for UPC-E
+			"E": ["0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"]
+		};
+	}
+
+	// Convert a numberarray to the representing
+
+
+	_createClass(EANencoder, [{
+		key: "encode",
+		value: function encode(number, structure, separator) {
+			// Create the variable that should be returned at the end of the function
+			var result = "";
+
+			// Make sure that the separator is set
+			separator = separator || "";
+
+			// Loop all the numbers
+			for (var i = 0; i < number.length; i++) {
+				// Using the L, G or R encoding and add it to the returning variable
+				var binary = this.binaries[structure[i]];
+				if (binary) {
+					result += binary[number[i]];
+				}
+
+				// Add separator in between encodings
+				if (i < number.length - 1) {
+					result += separator;
+				}
+			}
+			return result;
+		}
+	}]);
+
+	return EANencoder;
+}();
+
+exports.default = EANencoder;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _SET_BY_CODE;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// constants for internal usage
+var SET_A = exports.SET_A = 0;
+var SET_B = exports.SET_B = 1;
+var SET_C = exports.SET_C = 2;
+
+// Special characters
+var SHIFT = exports.SHIFT = 98;
+var START_A = exports.START_A = 103;
+var START_B = exports.START_B = 104;
+var START_C = exports.START_C = 105;
+var MODULO = exports.MODULO = 103;
+var STOP = exports.STOP = 106;
+
+// Get set by start code
+var SET_BY_CODE = exports.SET_BY_CODE = (_SET_BY_CODE = {}, _defineProperty(_SET_BY_CODE, START_A, SET_A), _defineProperty(_SET_BY_CODE, START_B, SET_B), _defineProperty(_SET_BY_CODE, START_C, SET_C), _SET_BY_CODE);
+
+// Get next set by code
+var SWAP = exports.SWAP = {
+	101: SET_A,
+	100: SET_B,
+	99: SET_C
+};
+
+var A_START_CHAR = exports.A_START_CHAR = String.fromCharCode(208); // START_A + 105
+var B_START_CHAR = exports.B_START_CHAR = String.fromCharCode(209); // START_B + 105
+var C_START_CHAR = exports.C_START_CHAR = String.fromCharCode(210); // START_C + 105
+
+// 128A (Code Set A)
+// ASCII characters 00 to 95 (0–9, A–Z and control codes), special characters, and FNC 1–4
+var A_CHARS = exports.A_CHARS = "[\x00-\x5F\xC8-\xCF]";
+
+// 128B (Code Set B)
+// ASCII characters 32 to 127 (0–9, A–Z, a–z), special characters, and FNC 1–4
+var B_CHARS = exports.B_CHARS = "[\x20-\x7F\xC8-\xCF]";
+
+// 128C (Code Set C)
+// 00–99 (encodes two digits with a single code point) and FNC1
+var C_CHARS = exports.C_CHARS = "(\xCF*[0-9]{2}\xCF*)";
+
+// CODE128 includes 107 symbols:
+// 103 data symbols, 3 start symbols (A, B and C), and 1 stop symbol (the last one)
+// Each symbol consist of three black bars (1) and three white spaces (0).
+var BARS = exports.BARS = [11011001100, 11001101100, 11001100110, 10010011000, 10010001100, 10001001100, 10011001000, 10011000100, 10001100100, 11001001000, 11001000100, 11000100100, 10110011100, 10011011100, 10011001110, 10111001100, 10011101100, 10011100110, 11001110010, 11001011100, 11001001110, 11011100100, 11001110100, 11101101110, 11101001100, 11100101100, 11100100110, 11101100100, 11100110100, 11100110010, 11011011000, 11011000110, 11000110110, 10100011000, 10001011000, 10001000110, 10110001000, 10001101000, 10001100010, 11010001000, 11000101000, 11000100010, 10110111000, 10110001110, 10001101110, 10111011000, 10111000110, 10001110110, 11101110110, 11010001110, 11000101110, 11011101000, 11011100010, 11011101110, 11101011000, 11101000110, 11100010110, 11101101000, 11101100010, 11100011010, 11101111010, 11001000010, 11110001010, 10100110000, 10100001100, 10010110000, 10010000110, 10000101100, 10000100110, 10110010000, 10110000100, 10011010000, 10011000010, 10000110100, 10000110010, 11000010010, 11001010000, 11110111010, 11000010100, 10001111010, 10100111100, 10010111100, 10010011110, 10111100100, 10011110100, 10011110010, 11110100100, 11110010100, 11110010010, 11011011110, 11011110110, 11110110110, 10101111000, 10100011110, 10001011110, 10111101000, 10111100010, 11110101000, 11110100010, 10111011110, 10111101110, 11101011110, 11110101110, 11010000100, 11010010000, 11010011100, 1100011101011];
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
-var _constants = __webpack_require__(2);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation
+// https://en.wikipedia.org/wiki/MSI_Barcode#Character_set_and_binary_lookup
+
+var MSI = function (_Barcode) {
+	_inherits(MSI, _Barcode);
+
+	function MSI(data, options) {
+		_classCallCheck(this, MSI);
+
+		return _possibleConstructorReturn(this, (MSI.__proto__ || Object.getPrototypeOf(MSI)).call(this, data, options));
+	}
+
+	_createClass(MSI, [{
+		key: "encode",
+		value: function encode() {
+			// Start bits
+			var ret = "110";
+
+			for (var i = 0; i < this.data.length; i++) {
+				// Convert the character to binary (always 4 binary digits)
+				var digit = parseInt(this.data[i]);
+				var bin = digit.toString(2);
+				bin = addZeroes(bin, 4 - bin.length);
+
+				// Add 100 for every zero and 110 for every 1
+				for (var b = 0; b < bin.length; b++) {
+					ret += bin[b] == "0" ? "100" : "110";
+				}
+			}
+
+			// End bits
+			ret += "1001";
+
+			return {
+				data: ret,
+				text: this.text
+			};
+		}
+	}, {
+		key: "valid",
+		value: function valid() {
+			return this.data.search(/^[0-9]+$/) !== -1;
+		}
+	}]);
+
+	return MSI;
+}(_Barcode3.default);
+
+function addZeroes(number, n) {
+	for (var i = 0; i < n; i++) {
+		number = "0" + number;
+	}
+	return number;
+}
+
+exports.default = MSI;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Barcode2 = __webpack_require__(0);
+
+var _Barcode3 = _interopRequireDefault(_Barcode2);
+
+var _constants = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1118,10 +1124,6 @@ var CODE128 = function (_Barcode) {
 				throw new RangeError('The encoding does not start with a start character.');
 			}
 
-			if (this.shouldEncodeAsEan128() === true) {
-				bytes.unshift(_constants.FNC1);
-			}
-
 			// Start encode with the right type
 			var encodingResult = CODE128.next(bytes, 1, startSet);
 
@@ -1137,18 +1139,6 @@ var CODE128 = function (_Barcode) {
 				// Add the end bits
 				CODE128.getBar(_constants.STOP)
 			};
-		}
-
-		// GS1-128/EAN-128
-
-	}, {
-		key: 'shouldEncodeAsEan128',
-		value: function shouldEncodeAsEan128() {
-			var isEAN128 = this.options.ean128 || false;
-			if (typeof isEAN128 === 'string') {
-				isEAN128 = isEAN128.toLowerCase() === 'true';
-			}
-			return isEAN128;
 		}
 
 		// Get a bar symbol by index
@@ -1225,7 +1215,7 @@ var CODE128 = function (_Barcode) {
 exports.default = CODE128;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1260,7 +1250,7 @@ function mod11(number) {
 }
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1277,14 +1267,14 @@ exports.default = function (old, replaceObj) {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(37);
+var utils = __webpack_require__(1);
+var normalizeHeaderName = __webpack_require__(34);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1300,10 +1290,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(16);
+    adapter = __webpack_require__(15);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(16);
+    adapter = __webpack_require__(15);
   }
   return adapter;
 }
@@ -1374,10 +1364,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1395,7 +1385,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1585,19 +1575,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(38);
-var buildURL = __webpack_require__(40);
-var parseHeaders = __webpack_require__(41);
-var isURLSameOrigin = __webpack_require__(42);
-var createError = __webpack_require__(17);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(43);
+var utils = __webpack_require__(1);
+var settle = __webpack_require__(35);
+var buildURL = __webpack_require__(37);
+var parseHeaders = __webpack_require__(38);
+var isURLSameOrigin = __webpack_require__(39);
+var createError = __webpack_require__(16);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(40);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1694,7 +1684,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(44);
+      var cookies = __webpack_require__(41);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1772,13 +1762,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(39);
+var enhanceError = __webpack_require__(36);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1797,7 +1787,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1809,7 +1799,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1835,105 +1825,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _constants = __webpack_require__(3);
-
-var _encoder = __webpack_require__(4);
-
-var _encoder2 = _interopRequireDefault(_encoder);
-
-var _Barcode2 = __webpack_require__(1);
-
-var _Barcode3 = _interopRequireDefault(_Barcode2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// Base class for EAN8 & EAN13
-var EAN = function (_Barcode) {
-	_inherits(EAN, _Barcode);
-
-	function EAN(data, options) {
-		_classCallCheck(this, EAN);
-
-		// Make sure the font is not bigger than the space between the guard bars
-		var _this = _possibleConstructorReturn(this, (EAN.__proto__ || Object.getPrototypeOf(EAN)).call(this, data, options));
-
-		_this.fontSize = !options.flat && options.fontSize > options.width * 10 ? options.width * 10 : options.fontSize;
-
-		// Make the guard bars go down half the way of the text
-		_this.guardHeight = options.height + _this.fontSize / 2 + options.textMargin;
-		return _this;
-	}
-
-	_createClass(EAN, [{
-		key: 'encode',
-		value: function encode() {
-			return this.options.flat ? this.encodeFlat() : this.encodeGuarded();
-		}
-	}, {
-		key: 'leftText',
-		value: function leftText(from, to) {
-			return this.text.substr(from, to);
-		}
-	}, {
-		key: 'leftEncode',
-		value: function leftEncode(data, structure) {
-			return (0, _encoder2.default)(data, structure);
-		}
-	}, {
-		key: 'rightText',
-		value: function rightText(from, to) {
-			return this.text.substr(from, to);
-		}
-	}, {
-		key: 'rightEncode',
-		value: function rightEncode(data, structure) {
-			return (0, _encoder2.default)(data, structure);
-		}
-	}, {
-		key: 'encodeGuarded',
-		value: function encodeGuarded() {
-			var textOptions = { fontSize: this.fontSize };
-			var guardOptions = { height: this.guardHeight };
-
-			return [{ data: _constants.SIDE_BIN, options: guardOptions }, { data: this.leftEncode(), text: this.leftText(), options: textOptions }, { data: _constants.MIDDLE_BIN, options: guardOptions }, { data: this.rightEncode(), text: this.rightText(), options: textOptions }, { data: _constants.SIDE_BIN, options: guardOptions }];
-		}
-	}, {
-		key: 'encodeFlat',
-		value: function encodeFlat() {
-			var data = [_constants.SIDE_BIN, this.leftEncode(), _constants.MIDDLE_BIN, this.rightEncode(), _constants.SIDE_BIN];
-
-			return {
-				data: data.join(''),
-				text: this.text
-			};
-		}
-	}]);
-
-	return EAN;
-}(_Barcode3.default);
-
-exports.default = EAN;
-
-/***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1947,11 +1839,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 exports.checksum = checksum;
 
-var _encoder = __webpack_require__(4);
+var _ean_encoder = __webpack_require__(5);
 
-var _encoder2 = _interopRequireDefault(_encoder);
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -2008,12 +1900,13 @@ var UPC = function (_Barcode) {
 	}, {
 		key: "flatEncoding",
 		value: function flatEncoding() {
+			var encoder = new _ean_encoder2.default();
 			var result = "";
 
 			result += "101";
-			result += (0, _encoder2.default)(this.data.substr(0, 6), "LLLLLL");
+			result += encoder.encode(this.data.substr(0, 6), "LLLLLL");
 			result += "01010";
-			result += (0, _encoder2.default)(this.data.substr(6, 6), "RRRRRR");
+			result += encoder.encode(this.data.substr(6, 6), "RRRRRR");
 			result += "101";
 
 			return {
@@ -2024,6 +1917,7 @@ var UPC = function (_Barcode) {
 	}, {
 		key: "guardedEncoding",
 		value: function guardedEncoding() {
+			var encoder = new _ean_encoder2.default();
 			var result = [];
 
 			// Add the first digit
@@ -2037,13 +1931,13 @@ var UPC = function (_Barcode) {
 
 			// Add the guard bars
 			result.push({
-				data: "101" + (0, _encoder2.default)(this.data[0], "L"),
+				data: "101" + encoder.encode(this.data[0], "L"),
 				options: { height: this.guardHeight }
 			});
 
 			// Add the left side
 			result.push({
-				data: (0, _encoder2.default)(this.data.substr(1, 5), "LLLLL"),
+				data: encoder.encode(this.data.substr(1, 5), "LLLLL"),
 				text: this.text.substr(1, 5),
 				options: { fontSize: this.fontSize }
 			});
@@ -2056,14 +1950,14 @@ var UPC = function (_Barcode) {
 
 			// Add the right side
 			result.push({
-				data: (0, _encoder2.default)(this.data.substr(6, 5), "RRRRR"),
+				data: encoder.encode(this.data.substr(6, 5), "RRRRR"),
 				text: this.text.substr(6, 5),
 				options: { fontSize: this.fontSize }
 			});
 
 			// Add the end bits
 			result.push({
-				data: (0, _encoder2.default)(this.data[11], "R") + "101",
+				data: encoder.encode(this.data[11], "R") + "101",
 				options: { height: this.guardHeight }
 			});
 
@@ -2104,82 +1998,7 @@ function checksum(number) {
 exports.default = UPC;
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _constants = __webpack_require__(82);
-
-var _Barcode2 = __webpack_require__(1);
-
-var _Barcode3 = _interopRequireDefault(_Barcode2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ITF = function (_Barcode) {
-	_inherits(ITF, _Barcode);
-
-	function ITF() {
-		_classCallCheck(this, ITF);
-
-		return _possibleConstructorReturn(this, (ITF.__proto__ || Object.getPrototypeOf(ITF)).apply(this, arguments));
-	}
-
-	_createClass(ITF, [{
-		key: 'valid',
-		value: function valid() {
-			return this.data.search(/^([0-9]{2})+$/) !== -1;
-		}
-	}, {
-		key: 'encode',
-		value: function encode() {
-			var _this2 = this;
-
-			// Calculate all the digit pairs
-			var encoded = this.data.match(/.{2}/g).map(function (pair) {
-				return _this2.encodePair(pair);
-			}).join('');
-
-			return {
-				data: _constants.START_BIN + encoded + _constants.END_BIN,
-				text: this.text
-			};
-		}
-
-		// Calculate the data of a number pair
-
-	}, {
-		key: 'encodePair',
-		value: function encodePair(pair) {
-			var second = _constants.BINARIES[pair[1]];
-
-			return _constants.BINARIES[pair[0]].split('').map(function (first, idx) {
-				return (first === '1' ? '111' : '1') + (second[idx] === '1' ? '000' : '0');
-			}).join('');
-		}
-	}]);
-
-	return ITF;
-}(_Barcode3.default);
-
-exports.default = ITF;
-
-/***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2212,7 +2031,7 @@ function optionsFromStrings(options) {
 }
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2246,7 +2065,7 @@ var defaults = {
 exports.default = defaults;
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2257,7 +2076,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getTotalWidthOfEncodings = exports.calculateEncodingAttributes = exports.getBarcodePadding = exports.getEncodingHeight = exports.getMaximumHeightOfEncodings = undefined;
 
-var _merge = __webpack_require__(12);
+var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
@@ -2347,7 +2166,7 @@ exports.calculateEncodingAttributes = calculateEncodingAttributes;
 exports.getTotalWidthOfEncodings = getTotalWidthOfEncodings;
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2420,14 +2239,14 @@ exports.InvalidElementException = InvalidElementException;
 exports.NoElementException = NoElementException;
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(28);
+module.exports = __webpack_require__(25);
 
 
 /***/ }),
-/* 28 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -2437,9 +2256,9 @@ module.exports = __webpack_require__(28);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(29);
+__webpack_require__(26);
 
-window.Vue = __webpack_require__(52);
+window.Vue = __webpack_require__(49);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -2447,10 +2266,12 @@ window.Vue = __webpack_require__(52);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('categoria', __webpack_require__(55));
-Vue.component('articulo', __webpack_require__(61));
-Vue.component('cliente', __webpack_require__(102));
-Vue.component('proveedor', __webpack_require__(107));
+Vue.component('categoria', __webpack_require__(52));
+Vue.component('articulo', __webpack_require__(58));
+Vue.component('cliente', __webpack_require__(98));
+Vue.component('proveedor', __webpack_require__(103));
+Vue.component('rol', __webpack_require__(108));
+Vue.component('user', __webpack_require__(113));
 
 var app = new Vue({
   el: '#app',
@@ -2460,11 +2281,11 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 29 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(30);
+window._ = __webpack_require__(27);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -2475,7 +2296,7 @@ window._ = __webpack_require__(30);
 try {
   //window.$ = window.jQuery = require('jquery');
 
-  __webpack_require__(32);
+  __webpack_require__(29);
 } catch (e) {}
 
 /**
@@ -2484,7 +2305,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(33);
+window.axios = __webpack_require__(30);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -2520,7 +2341,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 30 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -19609,10 +19430,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(31)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(28)(module)))
 
 /***/ }),
-/* 31 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -19640,7 +19461,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 32 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /*!
@@ -22023,22 +21844,22 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(34);
+module.exports = __webpack_require__(31);
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
-var bind = __webpack_require__(14);
-var Axios = __webpack_require__(36);
-var defaults = __webpack_require__(13);
+var utils = __webpack_require__(1);
+var bind = __webpack_require__(13);
+var Axios = __webpack_require__(33);
+var defaults = __webpack_require__(12);
 
 /**
  * Create an instance of Axios
@@ -22071,15 +21892,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(19);
-axios.CancelToken = __webpack_require__(50);
-axios.isCancel = __webpack_require__(18);
+axios.Cancel = __webpack_require__(18);
+axios.CancelToken = __webpack_require__(47);
+axios.isCancel = __webpack_require__(17);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(51);
+axios.spread = __webpack_require__(48);
 
 module.exports = axios;
 
@@ -22088,7 +21909,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports) {
 
 /*!
@@ -22115,16 +21936,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(13);
-var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(45);
-var dispatchRequest = __webpack_require__(46);
+var defaults = __webpack_require__(12);
+var utils = __webpack_require__(1);
+var InterceptorManager = __webpack_require__(42);
+var dispatchRequest = __webpack_require__(43);
 
 /**
  * Create a new instance of Axios
@@ -22201,13 +22022,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -22220,13 +22041,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(17);
+var createError = __webpack_require__(16);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -22253,7 +22074,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 39 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22281,13 +22102,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 40 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -22356,13 +22177,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 41 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -22416,13 +22237,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -22491,7 +22312,7 @@ module.exports = (
 
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22534,13 +22355,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -22594,13 +22415,13 @@ module.exports = (
 
 
 /***/ }),
-/* 45 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -22653,18 +22474,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 46 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
-var transformData = __webpack_require__(47);
-var isCancel = __webpack_require__(18);
-var defaults = __webpack_require__(13);
-var isAbsoluteURL = __webpack_require__(48);
-var combineURLs = __webpack_require__(49);
+var utils = __webpack_require__(1);
+var transformData = __webpack_require__(44);
+var isCancel = __webpack_require__(17);
+var defaults = __webpack_require__(12);
+var isAbsoluteURL = __webpack_require__(45);
+var combineURLs = __webpack_require__(46);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -22746,13 +22567,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 47 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(0);
+var utils = __webpack_require__(1);
 
 /**
  * Transform the data for a request or a response
@@ -22773,7 +22594,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 48 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22794,7 +22615,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 49 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22815,13 +22636,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 50 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(19);
+var Cancel = __webpack_require__(18);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -22879,7 +22700,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 51 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22913,7 +22734,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 52 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33727,10 +33548,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(53).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(50).setImmediate))
 
 /***/ }),
-/* 53 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
@@ -33783,7 +33604,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(54);
+__webpack_require__(51);
 // On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -33794,10 +33615,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 54 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -33987,22 +33808,22 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(15)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(14)))
 
 /***/ }),
-/* 55 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(56)
+  __webpack_require__(53)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(59)
+var __vue_script__ = __webpack_require__(56)
 /* template */
-var __vue_template__ = __webpack_require__(60)
+var __vue_template__ = __webpack_require__(57)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34041,17 +33862,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 56 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(57);
+var content = __webpack_require__(54);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("5e333118", content, false, {});
+var update = __webpack_require__(3)("5e333118", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -34067,10 +33888,10 @@ if(false) {
 }
 
 /***/ }),
-/* 57 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(7)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -34081,7 +33902,7 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 
 /***/ }),
-/* 58 */
+/* 55 */
 /***/ (function(module, exports) {
 
 /**
@@ -34114,7 +33935,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 59 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34480,7 +34301,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 60 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -35036,19 +34857,19 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(62)
+  __webpack_require__(59)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(64)
+var __vue_script__ = __webpack_require__(61)
 /* template */
-var __vue_template__ = __webpack_require__(101)
+var __vue_template__ = __webpack_require__(97)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -35087,17 +34908,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 62 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(63);
+var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("11e28637", content, false, {});
+var update = __webpack_require__(3)("11e28637", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -35113,10 +34934,10 @@ if(false) {
 }
 
 /***/ }),
-/* 63 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(7)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -35127,12 +34948,12 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 
 /***/ }),
-/* 64 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_barcode__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_barcode__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_barcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_barcode__);
 //
 //
@@ -35447,7 +35268,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             swal({
-                title: 'Esta seguro de desactivar esta artículo?',
+                title: 'Esta seguro de desactivar este artículo?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -35479,7 +35300,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             swal({
-                title: 'Esta seguro de activar esta artículo?',
+                title: 'Esta seguro de activar este artículo?',
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -35580,23 +35401,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 65 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var JsBarcode = __webpack_require__(66);
+var JsBarcode = __webpack_require__(63);
 
 var VueBarcode = {
-   render: function (createElement) {
-    return createElement('div', [
-      createElement(this.elementTag, {
-        style: { display: this.valid ? undefined : 'none' },
-        'class': ['vue-barcode-element']
-      }),
-      createElement('div', {
-        style: { display: this.valid ? 'none' : undefined }
-      }, this.$slots.default),
-    ]);
-  },
+  template: '<div>' +
+    '<svg class="vue-barcode-element" v-show="valid"></svg>'+
+    '<div v-show="!valid">'+
+      '<slot></slot>'+
+    '</div>'+
+    '</div>',
   props: {
     value: [String, Number],
     format: [String],
@@ -35619,13 +35435,6 @@ var VueBarcode = {
     displayValue: {
       type:  [String, Boolean],
       default: true
-    },
-    elementTag: {
-      type: String,
-      default: 'svg',
-      validator: function (value) {
-          return ['canvas', 'svg', 'img'].indexOf(value) !== -1
-      }
     }
   },
   mounted: function(){
@@ -35661,13 +35470,12 @@ function render(){
     valid: function (valid) {
       that.valid = valid;
     },
-    displayValue: this.displayValue,
-    elementTag: this.elementTag
+    displayValue: this.displayValue
   };
 
   removeUndefinedProps(settings);
 
-  JsBarcode(this.$el.querySelector('.vue-barcode-element'), String(this.value), settings);
+  JsBarcode(this.$el.querySelector('.vue-barcode-element'), this.value, settings);
 }
 
 function removeUndefinedProps(obj) {
@@ -35682,43 +35490,43 @@ module.exports = VueBarcode;
 
 
 /***/ }),
-/* 66 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _barcodes = __webpack_require__(67);
+var _barcodes = __webpack_require__(64);
 
 var _barcodes2 = _interopRequireDefault(_barcodes);
 
-var _merge = __webpack_require__(12);
+var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _linearizeEncodings = __webpack_require__(92);
+var _linearizeEncodings = __webpack_require__(88);
 
 var _linearizeEncodings2 = _interopRequireDefault(_linearizeEncodings);
 
-var _fixOptions = __webpack_require__(93);
+var _fixOptions = __webpack_require__(89);
 
 var _fixOptions2 = _interopRequireDefault(_fixOptions);
 
-var _getRenderProperties = __webpack_require__(94);
+var _getRenderProperties = __webpack_require__(90);
 
 var _getRenderProperties2 = _interopRequireDefault(_getRenderProperties);
 
-var _optionsFromStrings = __webpack_require__(23);
+var _optionsFromStrings = __webpack_require__(20);
 
 var _optionsFromStrings2 = _interopRequireDefault(_optionsFromStrings);
 
-var _ErrorHandler = __webpack_require__(100);
+var _ErrorHandler = __webpack_require__(96);
 
 var _ErrorHandler2 = _interopRequireDefault(_ErrorHandler);
 
-var _exceptions = __webpack_require__(26);
+var _exceptions = __webpack_require__(23);
 
-var _defaults = __webpack_require__(24);
+var _defaults = __webpack_require__(21);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -35940,7 +35748,7 @@ if (typeof jQuery !== 'undefined') {
 module.exports = JsBarcode;
 
 /***/ }),
-/* 67 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35950,28 +35758,30 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _CODE = __webpack_require__(68);
+var _CODE = __webpack_require__(65);
 
-var _CODE2 = __webpack_require__(69);
+var _CODE2 = __webpack_require__(66);
 
-var _EAN_UPC = __webpack_require__(75);
+var _EAN_UPC = __webpack_require__(72);
 
-var _ITF = __webpack_require__(81);
+var _ITF = __webpack_require__(78);
 
-var _MSI = __webpack_require__(84);
+var _ITF2 = __webpack_require__(79);
 
-var _pharmacode = __webpack_require__(89);
+var _MSI = __webpack_require__(80);
 
-var _codabar = __webpack_require__(90);
+var _pharmacode = __webpack_require__(85);
 
-var _GenericBarcode = __webpack_require__(91);
+var _codabar = __webpack_require__(86);
+
+var _GenericBarcode = __webpack_require__(87);
 
 exports.default = {
 	CODE39: _CODE.CODE39,
 	CODE128: _CODE2.CODE128, CODE128A: _CODE2.CODE128A, CODE128B: _CODE2.CODE128B, CODE128C: _CODE2.CODE128C,
 	EAN13: _EAN_UPC.EAN13, EAN8: _EAN_UPC.EAN8, EAN5: _EAN_UPC.EAN5, EAN2: _EAN_UPC.EAN2, UPC: _EAN_UPC.UPC, UPCE: _EAN_UPC.UPCE,
 	ITF14: _ITF.ITF14,
-	ITF: _ITF.ITF,
+	ITF: _ITF2.ITF,
 	MSI: _MSI.MSI, MSI10: _MSI.MSI10, MSI11: _MSI.MSI11, MSI1010: _MSI.MSI1010, MSI1110: _MSI.MSI1110,
 	pharmacode: _pharmacode.pharmacode,
 	codabar: _codabar.codabar,
@@ -35979,7 +35789,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 68 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35992,7 +35802,7 @@ exports.CODE39 = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -36090,7 +35900,7 @@ function mod43checksum(data) {
 exports.CODE39 = CODE39;
 
 /***/ }),
-/* 69 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36101,19 +35911,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CODE128C = exports.CODE128B = exports.CODE128A = exports.CODE128 = undefined;
 
-var _CODE128_AUTO = __webpack_require__(70);
+var _CODE128_AUTO = __webpack_require__(67);
 
 var _CODE128_AUTO2 = _interopRequireDefault(_CODE128_AUTO);
 
-var _CODE128A = __webpack_require__(72);
+var _CODE128A = __webpack_require__(69);
 
 var _CODE128A2 = _interopRequireDefault(_CODE128A);
 
-var _CODE128B = __webpack_require__(73);
+var _CODE128B = __webpack_require__(70);
 
 var _CODE128B2 = _interopRequireDefault(_CODE128B);
 
-var _CODE128C = __webpack_require__(74);
+var _CODE128C = __webpack_require__(71);
 
 var _CODE128C2 = _interopRequireDefault(_CODE128C);
 
@@ -36125,7 +35935,7 @@ exports.CODE128B = _CODE128B2.default;
 exports.CODE128C = _CODE128C2.default;
 
 /***/ }),
-/* 70 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36135,11 +35945,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _CODE2 = __webpack_require__(10);
+var _CODE2 = __webpack_require__(9);
 
 var _CODE3 = _interopRequireDefault(_CODE2);
 
-var _auto = __webpack_require__(71);
+var _auto = __webpack_require__(68);
 
 var _auto2 = _interopRequireDefault(_auto);
 
@@ -36172,7 +35982,7 @@ var CODE128AUTO = function (_CODE) {
 exports.default = CODE128AUTO;
 
 /***/ }),
-/* 71 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36182,7 +35992,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _constants = __webpack_require__(2);
+var _constants = __webpack_require__(6);
 
 // Match Set functions
 var matchSetALength = function matchSetALength(string) {
@@ -36251,7 +36061,7 @@ exports.default = function (string) {
 };
 
 /***/ }),
-/* 72 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36263,11 +36073,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _CODE2 = __webpack_require__(10);
+var _CODE2 = __webpack_require__(9);
 
 var _CODE3 = _interopRequireDefault(_CODE2);
 
-var _constants = __webpack_require__(2);
+var _constants = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36299,7 +36109,7 @@ var CODE128A = function (_CODE) {
 exports.default = CODE128A;
 
 /***/ }),
-/* 73 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36311,11 +36121,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _CODE2 = __webpack_require__(10);
+var _CODE2 = __webpack_require__(9);
 
 var _CODE3 = _interopRequireDefault(_CODE2);
 
-var _constants = __webpack_require__(2);
+var _constants = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36347,7 +36157,7 @@ var CODE128B = function (_CODE) {
 exports.default = CODE128B;
 
 /***/ }),
-/* 74 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36359,11 +36169,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _CODE2 = __webpack_require__(10);
+var _CODE2 = __webpack_require__(9);
 
 var _CODE3 = _interopRequireDefault(_CODE2);
 
-var _constants = __webpack_require__(2);
+var _constants = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36395,7 +36205,7 @@ var CODE128C = function (_CODE) {
 exports.default = CODE128C;
 
 /***/ }),
-/* 75 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36406,27 +36216,27 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.UPCE = exports.UPC = exports.EAN2 = exports.EAN5 = exports.EAN8 = exports.EAN13 = undefined;
 
-var _EAN = __webpack_require__(76);
+var _EAN = __webpack_require__(73);
 
 var _EAN2 = _interopRequireDefault(_EAN);
 
-var _EAN3 = __webpack_require__(77);
+var _EAN3 = __webpack_require__(74);
 
 var _EAN4 = _interopRequireDefault(_EAN3);
 
-var _EAN5 = __webpack_require__(78);
+var _EAN5 = __webpack_require__(75);
 
 var _EAN6 = _interopRequireDefault(_EAN5);
 
-var _EAN7 = __webpack_require__(79);
+var _EAN7 = __webpack_require__(76);
 
 var _EAN8 = _interopRequireDefault(_EAN7);
 
-var _UPC = __webpack_require__(21);
+var _UPC = __webpack_require__(19);
 
 var _UPC2 = _interopRequireDefault(_UPC);
 
-var _UPCE = __webpack_require__(80);
+var _UPCE = __webpack_require__(77);
 
 var _UPCE2 = _interopRequireDefault(_UPCE);
 
@@ -36438,6 +36248,392 @@ exports.EAN5 = _EAN6.default;
 exports.EAN2 = _EAN8.default;
 exports.UPC = _UPC2.default;
 exports.UPCE = _UPCE2.default;
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ean_encoder = __webpack_require__(5);
+
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
+
+var _Barcode2 = __webpack_require__(0);
+
+var _Barcode3 = _interopRequireDefault(_Barcode2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
+// https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Binary_encoding_of_data_digits_into_EAN-13_barcode
+
+var EAN13 = function (_Barcode) {
+	_inherits(EAN13, _Barcode);
+
+	function EAN13(data, options) {
+		_classCallCheck(this, EAN13);
+
+		// Add checksum if it does not exist
+		if (data.search(/^[0-9]{12}$/) !== -1) {
+			data += checksum(data);
+		}
+
+		// Make sure the font is not bigger than the space between the guard bars
+		var _this = _possibleConstructorReturn(this, (EAN13.__proto__ || Object.getPrototypeOf(EAN13)).call(this, data, options));
+
+		if (!options.flat && options.fontSize > options.width * 10) {
+			_this.fontSize = options.width * 10;
+		} else {
+			_this.fontSize = options.fontSize;
+		}
+
+		// Make the guard bars go down half the way of the text
+		_this.guardHeight = options.height + _this.fontSize / 2 + options.textMargin;
+
+		// Adds a last character to the end of the barcode
+		_this.lastChar = options.lastChar;
+		return _this;
+	}
+
+	_createClass(EAN13, [{
+		key: "valid",
+		value: function valid() {
+			return this.data.search(/^[0-9]{13}$/) !== -1 && this.data[12] == checksum(this.data);
+		}
+	}, {
+		key: "encode",
+		value: function encode() {
+			if (this.options.flat) {
+				return this.flatEncoding();
+			} else {
+				return this.guardedEncoding();
+			}
+		}
+
+		// Define the EAN-13 structure
+
+	}, {
+		key: "getStructure",
+		value: function getStructure() {
+			return ["LLLLLL", "LLGLGG", "LLGGLG", "LLGGGL", "LGLLGG", "LGGLLG", "LGGGLL", "LGLGLG", "LGLGGL", "LGGLGL"];
+		}
+
+		// The "standard" way of printing EAN13 barcodes with guard bars
+
+	}, {
+		key: "guardedEncoding",
+		value: function guardedEncoding() {
+			var encoder = new _ean_encoder2.default();
+			var result = [];
+
+			var structure = this.getStructure()[this.data[0]];
+
+			// Get the string to be encoded on the left side of the EAN code
+			var leftSide = this.data.substr(1, 6);
+
+			// Get the string to be encoded on the right side of the EAN code
+			var rightSide = this.data.substr(7, 6);
+
+			// Add the first digigt
+			if (this.options.displayValue) {
+				result.push({
+					data: "000000000000",
+					text: this.text.substr(0, 1),
+					options: { textAlign: "left", fontSize: this.fontSize }
+				});
+			}
+
+			// Add the guard bars
+			result.push({
+				data: "101",
+				options: { height: this.guardHeight }
+			});
+
+			// Add the left side
+			result.push({
+				data: encoder.encode(leftSide, structure),
+				text: this.text.substr(1, 6),
+				options: { fontSize: this.fontSize }
+			});
+
+			// Add the middle bits
+			result.push({
+				data: "01010",
+				options: { height: this.guardHeight }
+			});
+
+			// Add the right side
+			result.push({
+				data: encoder.encode(rightSide, "RRRRRR"),
+				text: this.text.substr(7, 6),
+				options: { fontSize: this.fontSize }
+			});
+
+			// Add the end bits
+			result.push({
+				data: "101",
+				options: { height: this.guardHeight }
+			});
+
+			if (this.options.lastChar && this.options.displayValue) {
+				result.push({ data: "00" });
+
+				result.push({
+					data: "00000",
+					text: this.options.lastChar,
+					options: { fontSize: this.fontSize }
+				});
+			}
+			return result;
+		}
+	}, {
+		key: "flatEncoding",
+		value: function flatEncoding() {
+			var encoder = new _ean_encoder2.default();
+			var result = "";
+
+			var structure = this.getStructure()[this.data[0]];
+
+			result += "101";
+			result += encoder.encode(this.data.substr(1, 6), structure);
+			result += "01010";
+			result += encoder.encode(this.data.substr(7, 6), "RRRRRR");
+			result += "101";
+
+			return {
+				data: result,
+				text: this.text
+			};
+		}
+	}]);
+
+	return EAN13;
+}(_Barcode3.default);
+
+// Calulate the checksum digit
+// https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
+
+
+function checksum(number) {
+	var result = 0;
+
+	var i;
+	for (i = 0; i < 12; i += 2) {
+		result += parseInt(number[i]);
+	}
+	for (i = 1; i < 12; i += 2) {
+		result += parseInt(number[i]) * 3;
+	}
+
+	return (10 - result % 10) % 10;
+}
+
+exports.default = EAN13;
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ean_encoder = __webpack_require__(5);
+
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
+
+var _Barcode2 = __webpack_require__(0);
+
+var _Barcode3 = _interopRequireDefault(_Barcode2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
+// http://www.barcodeisland.com/ean8.phtml
+
+var EAN8 = function (_Barcode) {
+	_inherits(EAN8, _Barcode);
+
+	function EAN8(data, options) {
+		_classCallCheck(this, EAN8);
+
+		// Add checksum if it does not exist
+		if (data.search(/^[0-9]{7}$/) !== -1) {
+			data += checksum(data);
+		}
+
+		return _possibleConstructorReturn(this, (EAN8.__proto__ || Object.getPrototypeOf(EAN8)).call(this, data, options));
+	}
+
+	_createClass(EAN8, [{
+		key: "valid",
+		value: function valid() {
+			return this.data.search(/^[0-9]{8}$/) !== -1 && this.data[7] == checksum(this.data);
+		}
+	}, {
+		key: "encode",
+		value: function encode() {
+			var encoder = new _ean_encoder2.default();
+
+			// Create the return variable
+			var result = "";
+
+			// Get the number to be encoded on the left side of the EAN code
+			var leftSide = this.data.substr(0, 4);
+
+			// Get the number to be encoded on the right side of the EAN code
+			var rightSide = this.data.substr(4, 4);
+
+			// Add the start bits
+			result += encoder.startBin;
+
+			// Add the left side
+			result += encoder.encode(leftSide, "LLLL");
+
+			// Add the middle bits
+			result += encoder.middleBin;
+
+			// Add the right side
+			result += encoder.encode(rightSide, "RRRR");
+
+			// Add the end bits
+			result += encoder.endBin;
+
+			return {
+				data: result,
+				text: this.text
+			};
+		}
+	}]);
+
+	return EAN8;
+}(_Barcode3.default);
+
+// Calulate the checksum digit
+
+
+function checksum(number) {
+	var result = 0;
+
+	var i;
+	for (i = 0; i < 7; i += 2) {
+		result += parseInt(number[i]) * 3;
+	}
+
+	for (i = 1; i < 7; i += 2) {
+		result += parseInt(number[i]);
+	}
+
+	return (10 - result % 10) % 10;
+}
+
+exports.default = EAN8;
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _ean_encoder = __webpack_require__(5);
+
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
+
+var _Barcode2 = __webpack_require__(0);
+
+var _Barcode3 = _interopRequireDefault(_Barcode2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
+// https://en.wikipedia.org/wiki/EAN_5#Encoding
+
+var EAN5 = function (_Barcode) {
+	_inherits(EAN5, _Barcode);
+
+	function EAN5(data, options) {
+		_classCallCheck(this, EAN5);
+
+		// Define the EAN-13 structure
+		var _this = _possibleConstructorReturn(this, (EAN5.__proto__ || Object.getPrototypeOf(EAN5)).call(this, data, options));
+
+		_this.structure = ["GGLLL", "GLGLL", "GLLGL", "GLLLG", "LGGLL", "LLGGL", "LLLGG", "LGLGL", "LGLLG", "LLGLG"];
+		return _this;
+	}
+
+	_createClass(EAN5, [{
+		key: "valid",
+		value: function valid() {
+			return this.data.search(/^[0-9]{5}$/) !== -1;
+		}
+	}, {
+		key: "encode",
+		value: function encode() {
+			var encoder = new _ean_encoder2.default();
+			var checksum = this.checksum();
+
+			// Start bits
+			var result = "1011";
+
+			// Use normal ean encoding with 01 in between all digits
+			result += encoder.encode(this.data, this.structure[checksum], "01");
+
+			return {
+				data: result,
+				text: this.text
+			};
+		}
+	}, {
+		key: "checksum",
+		value: function checksum() {
+			var result = 0;
+
+			result += parseInt(this.data[0]) * 3;
+			result += parseInt(this.data[1]) * 9;
+			result += parseInt(this.data[2]) * 3;
+			result += parseInt(this.data[3]) * 9;
+			result += parseInt(this.data[4]) * 3;
+
+			return result % 10;
+		}
+	}]);
+
+	return EAN5;
+}(_Barcode3.default);
+
+exports.default = EAN5;
 
 /***/ }),
 /* 76 */
@@ -36452,296 +36648,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _ean_encoder = __webpack_require__(5);
 
-var _constants = __webpack_require__(3);
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
 
-var _EAN2 = __webpack_require__(20);
-
-var _EAN3 = _interopRequireDefault(_EAN2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
-// https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Binary_encoding_of_data_digits_into_EAN-13_barcode
-
-// Calculate the checksum digit
-// https://en.wikipedia.org/wiki/International_Article_Number_(EAN)#Calculation_of_checksum_digit
-var checksum = function checksum(number) {
-	var res = number.substr(0, 12).split('').map(function (n) {
-		return +n;
-	}).reduce(function (sum, a, idx) {
-		return idx % 2 ? sum + a * 3 : sum + a;
-	}, 0);
-
-	return (10 - res % 10) % 10;
-};
-
-var EAN13 = function (_EAN) {
-	_inherits(EAN13, _EAN);
-
-	function EAN13(data, options) {
-		_classCallCheck(this, EAN13);
-
-		// Add checksum if it does not exist
-		if (data.search(/^[0-9]{12}$/) !== -1) {
-			data += checksum(data);
-		}
-
-		// Adds a last character to the end of the barcode
-		var _this = _possibleConstructorReturn(this, (EAN13.__proto__ || Object.getPrototypeOf(EAN13)).call(this, data, options));
-
-		_this.lastChar = options.lastChar;
-		return _this;
-	}
-
-	_createClass(EAN13, [{
-		key: 'valid',
-		value: function valid() {
-			return this.data.search(/^[0-9]{13}$/) !== -1 && +this.data[12] === checksum(this.data);
-		}
-	}, {
-		key: 'leftText',
-		value: function leftText() {
-			return _get(EAN13.prototype.__proto__ || Object.getPrototypeOf(EAN13.prototype), 'leftText', this).call(this, 1, 6);
-		}
-	}, {
-		key: 'leftEncode',
-		value: function leftEncode() {
-			var data = this.data.substr(1, 6);
-			var structure = _constants.EAN13_STRUCTURE[this.data[0]];
-			return _get(EAN13.prototype.__proto__ || Object.getPrototypeOf(EAN13.prototype), 'leftEncode', this).call(this, data, structure);
-		}
-	}, {
-		key: 'rightText',
-		value: function rightText() {
-			return _get(EAN13.prototype.__proto__ || Object.getPrototypeOf(EAN13.prototype), 'rightText', this).call(this, 7, 6);
-		}
-	}, {
-		key: 'rightEncode',
-		value: function rightEncode() {
-			var data = this.data.substr(7, 6);
-			return _get(EAN13.prototype.__proto__ || Object.getPrototypeOf(EAN13.prototype), 'rightEncode', this).call(this, data, 'RRRRRR');
-		}
-
-		// The "standard" way of printing EAN13 barcodes with guard bars
-
-	}, {
-		key: 'encodeGuarded',
-		value: function encodeGuarded() {
-			var data = _get(EAN13.prototype.__proto__ || Object.getPrototypeOf(EAN13.prototype), 'encodeGuarded', this).call(this);
-
-			// Extend data with left digit & last character
-			if (this.options.displayValue) {
-				data.unshift({
-					data: '000000000000',
-					text: this.text.substr(0, 1),
-					options: { textAlign: 'left', fontSize: this.fontSize }
-				});
-
-				if (this.options.lastChar) {
-					data.push({
-						data: '00'
-					});
-					data.push({
-						data: '00000',
-						text: this.options.lastChar,
-						options: { fontSize: this.fontSize }
-					});
-				}
-			}
-
-			return data;
-		}
-	}]);
-
-	return EAN13;
-}(_EAN3.default);
-
-exports.default = EAN13;
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _EAN2 = __webpack_require__(20);
-
-var _EAN3 = _interopRequireDefault(_EAN2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
-// http://www.barcodeisland.com/ean8.phtml
-
-// Calculate the checksum digit
-var checksum = function checksum(number) {
-	var res = number.substr(0, 7).split('').map(function (n) {
-		return +n;
-	}).reduce(function (sum, a, idx) {
-		return idx % 2 ? sum + a : sum + a * 3;
-	}, 0);
-
-	return (10 - res % 10) % 10;
-};
-
-var EAN8 = function (_EAN) {
-	_inherits(EAN8, _EAN);
-
-	function EAN8(data, options) {
-		_classCallCheck(this, EAN8);
-
-		// Add checksum if it does not exist
-		if (data.search(/^[0-9]{7}$/) !== -1) {
-			data += checksum(data);
-		}
-
-		return _possibleConstructorReturn(this, (EAN8.__proto__ || Object.getPrototypeOf(EAN8)).call(this, data, options));
-	}
-
-	_createClass(EAN8, [{
-		key: 'valid',
-		value: function valid() {
-			return this.data.search(/^[0-9]{8}$/) !== -1 && +this.data[7] === checksum(this.data);
-		}
-	}, {
-		key: 'leftText',
-		value: function leftText() {
-			return _get(EAN8.prototype.__proto__ || Object.getPrototypeOf(EAN8.prototype), 'leftText', this).call(this, 0, 4);
-		}
-	}, {
-		key: 'leftEncode',
-		value: function leftEncode() {
-			var data = this.data.substr(0, 4);
-			return _get(EAN8.prototype.__proto__ || Object.getPrototypeOf(EAN8.prototype), 'leftEncode', this).call(this, data, 'LLLL');
-		}
-	}, {
-		key: 'rightText',
-		value: function rightText() {
-			return _get(EAN8.prototype.__proto__ || Object.getPrototypeOf(EAN8.prototype), 'rightText', this).call(this, 4, 4);
-		}
-	}, {
-		key: 'rightEncode',
-		value: function rightEncode() {
-			var data = this.data.substr(4, 4);
-			return _get(EAN8.prototype.__proto__ || Object.getPrototypeOf(EAN8.prototype), 'rightEncode', this).call(this, data, 'RRRR');
-		}
-	}]);
-
-	return EAN8;
-}(_EAN3.default);
-
-exports.default = EAN8;
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _constants = __webpack_require__(3);
-
-var _encoder = __webpack_require__(4);
-
-var _encoder2 = _interopRequireDefault(_encoder);
-
-var _Barcode2 = __webpack_require__(1);
-
-var _Barcode3 = _interopRequireDefault(_Barcode2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // Encoding documentation:
-// https://en.wikipedia.org/wiki/EAN_5#Encoding
-
-var checksum = function checksum(data) {
-	var result = data.split('').map(function (n) {
-		return +n;
-	}).reduce(function (sum, a, idx) {
-		return idx % 2 ? sum + a * 9 : sum + a * 3;
-	}, 0);
-	return result % 10;
-};
-
-var EAN5 = function (_Barcode) {
-	_inherits(EAN5, _Barcode);
-
-	function EAN5(data, options) {
-		_classCallCheck(this, EAN5);
-
-		return _possibleConstructorReturn(this, (EAN5.__proto__ || Object.getPrototypeOf(EAN5)).call(this, data, options));
-	}
-
-	_createClass(EAN5, [{
-		key: 'valid',
-		value: function valid() {
-			return this.data.search(/^[0-9]{5}$/) !== -1;
-		}
-	}, {
-		key: 'encode',
-		value: function encode() {
-			var structure = _constants.EAN5_STRUCTURE[checksum(this.data)];
-			return {
-				data: '1011' + (0, _encoder2.default)(this.data, structure, '01'),
-				text: this.text
-			};
-		}
-	}]);
-
-	return EAN5;
-}(_Barcode3.default);
-
-exports.default = EAN5;
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _constants = __webpack_require__(3);
-
-var _encoder = __webpack_require__(4);
-
-var _encoder2 = _interopRequireDefault(_encoder);
-
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -36760,22 +36671,33 @@ var EAN2 = function (_Barcode) {
 	function EAN2(data, options) {
 		_classCallCheck(this, EAN2);
 
-		return _possibleConstructorReturn(this, (EAN2.__proto__ || Object.getPrototypeOf(EAN2)).call(this, data, options));
+		var _this = _possibleConstructorReturn(this, (EAN2.__proto__ || Object.getPrototypeOf(EAN2)).call(this, data, options));
+
+		_this.structure = ["LL", "LG", "GL", "GG"];
+		return _this;
 	}
 
 	_createClass(EAN2, [{
-		key: 'valid',
+		key: "valid",
 		value: function valid() {
 			return this.data.search(/^[0-9]{2}$/) !== -1;
 		}
 	}, {
-		key: 'encode',
+		key: "encode",
 		value: function encode() {
+			var encoder = new _ean_encoder2.default();
+
 			// Choose the structure based on the number mod 4
-			var structure = _constants.EAN2_STRUCTURE[parseInt(this.data) % 4];
+			var structure = this.structure[parseInt(this.data) % 4];
+
+			// Start bits
+			var result = "1011";
+
+			// Encode the two digits with 01 in between
+			result += encoder.encode(this.data, structure, "01");
+
 			return {
-				// Start bits + Encode the two digits with 01 in between
-				data: '1011' + (0, _encoder2.default)(this.data, structure, '01'),
+				data: result,
 				text: this.text
 			};
 		}
@@ -36787,7 +36709,7 @@ var EAN2 = function (_Barcode) {
 exports.default = EAN2;
 
 /***/ }),
-/* 80 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36799,15 +36721,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _encoder = __webpack_require__(4);
+var _ean_encoder = __webpack_require__(5);
 
-var _encoder2 = _interopRequireDefault(_encoder);
+var _ean_encoder2 = _interopRequireDefault(_ean_encoder);
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
-var _UPC = __webpack_require__(21);
+var _UPC = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36888,10 +36810,11 @@ var UPCE = function (_Barcode) {
 	}, {
 		key: 'flatEncoding',
 		value: function flatEncoding() {
+			var encoder = new _ean_encoder2.default();
 			var result = "";
 
 			result += "101";
-			result += this.encodeMiddleDigits();
+			result += this.encodeMiddleDigits(encoder);
 			result += "010101";
 
 			return {
@@ -36902,6 +36825,7 @@ var UPCE = function (_Barcode) {
 	}, {
 		key: 'guardedEncoding',
 		value: function guardedEncoding() {
+			var encoder = new _ean_encoder2.default();
 			var result = [];
 
 			// Add the UPC-A number system digit beneath the quiet zone
@@ -36921,7 +36845,7 @@ var UPCE = function (_Barcode) {
 
 			// Add the 6 UPC-E digits
 			result.push({
-				data: this.encodeMiddleDigits(),
+				data: this.encodeMiddleDigits(encoder),
 				text: this.text.substring(1, 7),
 				options: { fontSize: this.fontSize }
 			});
@@ -36945,11 +36869,11 @@ var UPCE = function (_Barcode) {
 		}
 	}, {
 		key: 'encodeMiddleDigits',
-		value: function encodeMiddleDigits() {
+		value: function encodeMiddleDigits(encoder) {
 			var numberSystem = this.upcA[0];
 			var checkDigit = this.upcA[this.upcA.length - 1];
 			var parity = PARITIES[parseInt(checkDigit)][parseInt(numberSystem)];
-			return (0, _encoder2.default)(this.middleDigits, parity);
+			return encoder.encode(this.middleDigits, parity);
 		}
 	}]);
 
@@ -36978,32 +36902,7 @@ function expandToUPCA(middleDigits, numberSystem) {
 exports.default = UPCE;
 
 /***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ITF14 = exports.ITF = undefined;
-
-var _ITF = __webpack_require__(22);
-
-var _ITF2 = _interopRequireDefault(_ITF);
-
-var _ITF3 = __webpack_require__(83);
-
-var _ITF4 = _interopRequireDefault(_ITF3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.ITF = _ITF2.default;
-exports.ITF14 = _ITF4.default;
-
-/***/ }),
-/* 82 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37012,27 +36911,13 @@ exports.ITF14 = _ITF4.default;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-var START_BIN = exports.START_BIN = '1010';
-var END_BIN = exports.END_BIN = '11101';
-
-var BINARIES = exports.BINARIES = ['00110', '10001', '01001', '11000', '00101', '10100', '01100', '00011', '10010', '01010'];
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+exports.ITF14 = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _ITF2 = __webpack_require__(22);
+var _Barcode2 = __webpack_require__(0);
 
-var _ITF3 = _interopRequireDefault(_ITF2);
+var _Barcode3 = _interopRequireDefault(_Barcode2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37042,19 +36927,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// Calculate the checksum digit
-var checksum = function checksum(data) {
-	var res = data.substr(0, 13).split('').map(function (num) {
-		return parseInt(num, 10);
-	}).reduce(function (sum, n, idx) {
-		return sum + n * (3 - idx % 2 * 2);
-	}, 0);
-
-	return Math.ceil(res / 10) * 10 - res;
-};
-
-var ITF14 = function (_ITF) {
-	_inherits(ITF14, _ITF);
+var ITF14 = function (_Barcode) {
+	_inherits(ITF14, _Barcode);
 
 	function ITF14(data, options) {
 		_classCallCheck(this, ITF14);
@@ -37063,23 +36937,187 @@ var ITF14 = function (_ITF) {
 		if (data.search(/^[0-9]{13}$/) !== -1) {
 			data += checksum(data);
 		}
-		return _possibleConstructorReturn(this, (ITF14.__proto__ || Object.getPrototypeOf(ITF14)).call(this, data, options));
+
+		var _this = _possibleConstructorReturn(this, (ITF14.__proto__ || Object.getPrototypeOf(ITF14)).call(this, data, options));
+
+		_this.binaryRepresentation = {
+			"0": "00110",
+			"1": "10001",
+			"2": "01001",
+			"3": "11000",
+			"4": "00101",
+			"5": "10100",
+			"6": "01100",
+			"7": "00011",
+			"8": "10010",
+			"9": "01010"
+		};
+		return _this;
 	}
 
 	_createClass(ITF14, [{
-		key: 'valid',
+		key: "valid",
 		value: function valid() {
-			return this.data.search(/^[0-9]{14}$/) !== -1 && +this.data[13] === checksum(this.data);
+			return this.data.search(/^[0-9]{14}$/) !== -1 && this.data[13] == checksum(this.data);
+		}
+	}, {
+		key: "encode",
+		value: function encode() {
+			var result = "1010";
+
+			// Calculate all the digit pairs
+			for (var i = 0; i < 14; i += 2) {
+				result += this.calculatePair(this.data.substr(i, 2));
+			}
+
+			// Always add the same end bits
+			result += "11101";
+
+			return {
+				data: result,
+				text: this.text
+			};
+		}
+
+		// Calculate the data of a number pair
+
+	}, {
+		key: "calculatePair",
+		value: function calculatePair(numberPair) {
+			var result = "";
+
+			var number1Struct = this.binaryRepresentation[numberPair[0]];
+			var number2Struct = this.binaryRepresentation[numberPair[1]];
+
+			// Take every second bit and add to the result
+			for (var i = 0; i < 5; i++) {
+				result += number1Struct[i] == "1" ? "111" : "1";
+				result += number2Struct[i] == "1" ? "000" : "0";
+			}
+
+			return result;
 		}
 	}]);
 
 	return ITF14;
-}(_ITF3.default);
+}(_Barcode3.default);
 
-exports.default = ITF14;
+// Calulate the checksum digit
+
+
+function checksum(data) {
+	var result = 0;
+
+	for (var i = 0; i < 13; i++) {
+		result += parseInt(data[i]) * (3 - i % 2 * 2);
+	}
+
+	return Math.ceil(result / 10) * 10 - result;
+}
+
+exports.ITF14 = ITF14;
 
 /***/ }),
-/* 84 */
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.ITF = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Barcode2 = __webpack_require__(0);
+
+var _Barcode3 = _interopRequireDefault(_Barcode2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ITF = function (_Barcode) {
+	_inherits(ITF, _Barcode);
+
+	function ITF(data, options) {
+		_classCallCheck(this, ITF);
+
+		var _this = _possibleConstructorReturn(this, (ITF.__proto__ || Object.getPrototypeOf(ITF)).call(this, data, options));
+
+		_this.binaryRepresentation = {
+			"0": "00110",
+			"1": "10001",
+			"2": "01001",
+			"3": "11000",
+			"4": "00101",
+			"5": "10100",
+			"6": "01100",
+			"7": "00011",
+			"8": "10010",
+			"9": "01010"
+		};
+		return _this;
+	}
+
+	_createClass(ITF, [{
+		key: "valid",
+		value: function valid() {
+			return this.data.search(/^([0-9]{2})+$/) !== -1;
+		}
+	}, {
+		key: "encode",
+		value: function encode() {
+			// Always add the same start bits
+			var result = "1010";
+
+			// Calculate all the digit pairs
+			for (var i = 0; i < this.data.length; i += 2) {
+				result += this.calculatePair(this.data.substr(i, 2));
+			}
+
+			// Always add the same end bits
+			result += "11101";
+
+			return {
+				data: result,
+				text: this.text
+			};
+		}
+
+		// Calculate the data of a number pair
+
+	}, {
+		key: "calculatePair",
+		value: function calculatePair(numberPair) {
+			var result = "";
+
+			var number1Struct = this.binaryRepresentation[numberPair[0]];
+			var number2Struct = this.binaryRepresentation[numberPair[1]];
+
+			// Take every second bit and add to the result
+			for (var i = 0; i < 5; i++) {
+				result += number1Struct[i] == "1" ? "111" : "1";
+				result += number2Struct[i] == "1" ? "000" : "0";
+			}
+
+			return result;
+		}
+	}]);
+
+	return ITF;
+}(_Barcode3.default);
+
+exports.ITF = ITF;
+
+/***/ }),
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37090,23 +37128,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MSI1110 = exports.MSI1010 = exports.MSI11 = exports.MSI10 = exports.MSI = undefined;
 
-var _MSI = __webpack_require__(5);
+var _MSI = __webpack_require__(7);
 
 var _MSI2 = _interopRequireDefault(_MSI);
 
-var _MSI3 = __webpack_require__(85);
+var _MSI3 = __webpack_require__(81);
 
 var _MSI4 = _interopRequireDefault(_MSI3);
 
-var _MSI5 = __webpack_require__(86);
+var _MSI5 = __webpack_require__(82);
 
 var _MSI6 = _interopRequireDefault(_MSI5);
 
-var _MSI7 = __webpack_require__(87);
+var _MSI7 = __webpack_require__(83);
 
 var _MSI8 = _interopRequireDefault(_MSI7);
 
-var _MSI9 = __webpack_require__(88);
+var _MSI9 = __webpack_require__(84);
 
 var _MSI10 = _interopRequireDefault(_MSI9);
 
@@ -37119,7 +37157,7 @@ exports.MSI1010 = _MSI8.default;
 exports.MSI1110 = _MSI10.default;
 
 /***/ }),
-/* 85 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37129,11 +37167,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _MSI2 = __webpack_require__(5);
+var _MSI2 = __webpack_require__(7);
 
 var _MSI3 = _interopRequireDefault(_MSI2);
 
-var _checksums = __webpack_require__(11);
+var _checksums = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37158,7 +37196,7 @@ var MSI10 = function (_MSI) {
 exports.default = MSI10;
 
 /***/ }),
-/* 86 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37168,11 +37206,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _MSI2 = __webpack_require__(5);
+var _MSI2 = __webpack_require__(7);
 
 var _MSI3 = _interopRequireDefault(_MSI2);
 
-var _checksums = __webpack_require__(11);
+var _checksums = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37197,7 +37235,7 @@ var MSI11 = function (_MSI) {
 exports.default = MSI11;
 
 /***/ }),
-/* 87 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37207,11 +37245,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _MSI2 = __webpack_require__(5);
+var _MSI2 = __webpack_require__(7);
 
 var _MSI3 = _interopRequireDefault(_MSI2);
 
-var _checksums = __webpack_require__(11);
+var _checksums = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37238,7 +37276,7 @@ var MSI1010 = function (_MSI) {
 exports.default = MSI1010;
 
 /***/ }),
-/* 88 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37248,11 +37286,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _MSI2 = __webpack_require__(5);
+var _MSI2 = __webpack_require__(7);
 
 var _MSI3 = _interopRequireDefault(_MSI2);
 
-var _checksums = __webpack_require__(11);
+var _checksums = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37279,7 +37317,7 @@ var MSI1110 = function (_MSI) {
 exports.default = MSI1110;
 
 /***/ }),
-/* 89 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37292,7 +37330,7 @@ exports.pharmacode = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -37358,7 +37396,7 @@ var pharmacode = function (_Barcode) {
 exports.pharmacode = pharmacode;
 
 /***/ }),
-/* 90 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37371,7 +37409,7 @@ exports.codabar = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -37443,8 +37481,8 @@ var codabar = function (_Barcode) {
 				".": "1101101101",
 				"+": "101100110011",
 				"A": "1011001001",
-				"B": "1001001011",
-				"C": "1010010011",
+				"B": "1010010011",
+				"C": "1001001011",
 				"D": "1010011001"
 			};
 		}
@@ -37456,7 +37494,7 @@ var codabar = function (_Barcode) {
 exports.codabar = codabar;
 
 /***/ }),
-/* 91 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37469,7 +37507,7 @@ exports.GenericBarcode = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Barcode2 = __webpack_require__(1);
+var _Barcode2 = __webpack_require__(0);
 
 var _Barcode3 = _interopRequireDefault(_Barcode2);
 
@@ -37517,7 +37555,7 @@ var GenericBarcode = function (_Barcode) {
 exports.GenericBarcode = GenericBarcode;
 
 /***/ }),
-/* 92 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37550,7 +37588,7 @@ function linearizeEncodings(encodings) {
 }
 
 /***/ }),
-/* 93 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37573,7 +37611,7 @@ function fixOptions(options) {
 }
 
 /***/ }),
-/* 94 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37587,15 +37625,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* global HTMLCanvasElement */
 /* global SVGElement */
 
-var _getOptionsFromElement = __webpack_require__(95);
+var _getOptionsFromElement = __webpack_require__(91);
 
 var _getOptionsFromElement2 = _interopRequireDefault(_getOptionsFromElement);
 
-var _renderers = __webpack_require__(96);
+var _renderers = __webpack_require__(92);
 
 var _renderers2 = _interopRequireDefault(_renderers);
 
-var _exceptions = __webpack_require__(26);
+var _exceptions = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37687,7 +37725,7 @@ function newCanvasRenderProperties(imgElement) {
 exports.default = getRenderProperties;
 
 /***/ }),
-/* 95 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37697,11 +37735,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _optionsFromStrings = __webpack_require__(23);
+var _optionsFromStrings = __webpack_require__(20);
 
 var _optionsFromStrings2 = _interopRequireDefault(_optionsFromStrings);
 
-var _defaults = __webpack_require__(24);
+var _defaults = __webpack_require__(21);
 
 var _defaults2 = _interopRequireDefault(_defaults);
 
@@ -37734,7 +37772,7 @@ function getOptionsFromElement(element) {
 exports.default = getOptionsFromElement;
 
 /***/ }),
-/* 96 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37744,15 +37782,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _canvas = __webpack_require__(97);
+var _canvas = __webpack_require__(93);
 
 var _canvas2 = _interopRequireDefault(_canvas);
 
-var _svg = __webpack_require__(98);
+var _svg = __webpack_require__(94);
 
 var _svg2 = _interopRequireDefault(_svg);
 
-var _object = __webpack_require__(99);
+var _object = __webpack_require__(95);
 
 var _object2 = _interopRequireDefault(_object);
 
@@ -37761,7 +37799,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = { CanvasRenderer: _canvas2.default, SVGRenderer: _svg2.default, ObjectRenderer: _object2.default };
 
 /***/ }),
-/* 97 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37773,11 +37811,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _merge = __webpack_require__(12);
+var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _shared = __webpack_require__(25);
+var _shared = __webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37925,7 +37963,7 @@ var CanvasRenderer = function () {
 exports.default = CanvasRenderer;
 
 /***/ }),
-/* 98 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37937,11 +37975,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _merge = __webpack_require__(12);
+var _merge = __webpack_require__(11);
 
 var _merge2 = _interopRequireDefault(_merge);
 
-var _shared = __webpack_require__(25);
+var _shared = __webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38120,7 +38158,7 @@ var SVGRenderer = function () {
 exports.default = SVGRenderer;
 
 /***/ }),
-/* 99 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38156,7 +38194,7 @@ var ObjectRenderer = function () {
 exports.default = ObjectRenderer;
 
 /***/ }),
-/* 100 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38216,7 +38254,7 @@ var ErrorHandler = function () {
 exports.default = ErrorHandler;
 
 /***/ }),
-/* 101 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -38702,7 +38740,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                    Generando código de barras.\n                                "
+                                "\n                                    Generando código de barras.    \n                                "
                               )
                             ]
                           )
@@ -38987,19 +39025,19 @@ if (false) {
 }
 
 /***/ }),
-/* 102 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(103)
+  __webpack_require__(99)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(105)
+var __vue_script__ = __webpack_require__(101)
 /* template */
-var __vue_template__ = __webpack_require__(106)
+var __vue_template__ = __webpack_require__(102)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -39038,17 +39076,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 103 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(104);
+var content = __webpack_require__(100);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("6bb6f57e", content, false, {});
+var update = __webpack_require__(3)("6bb6f57e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -39064,10 +39102,10 @@ if(false) {
 }
 
 /***/ }),
-/* 104 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(7)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -39078,7 +39116,7 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 
 /***/ }),
-/* 105 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39422,7 +39460,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 106 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -40115,19 +40153,19 @@ if (false) {
 }
 
 /***/ }),
-/* 107 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(108)
+  __webpack_require__(104)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(110)
+var __vue_script__ = __webpack_require__(106)
 /* template */
-var __vue_template__ = __webpack_require__(111)
+var __vue_template__ = __webpack_require__(107)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -40166,17 +40204,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 108 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(109);
+var content = __webpack_require__(105);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("7730f22e", content, false, {});
+var update = __webpack_require__(3)("7730f22e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -40192,10 +40230,10 @@ if(false) {
 }
 
 /***/ }),
-/* 109 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(7)(false);
+exports = module.exports = __webpack_require__(2)(false);
 // imports
 
 
@@ -40206,11 +40244,24 @@ exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    pos
 
 
 /***/ }),
-/* 110 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40451,13 +40502,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var me = this;
 
-            axios.post('/cliente/registrar', {
+            axios.post('/proveedor/registrar', {
                 'nombre': this.nombre,
                 'tipo_documento': this.tipo_documento,
                 'num_documento': this.num_documento,
                 'direccion': this.direccion,
                 'telefono': this.telefono,
-                'email': this.email
+                'email': this.email,
+                'contacto': this.contacto,
+                'telefono_contacto': this.telefono_contacto
+
             }).then(function (response) {
                 me.cerrarModal();
                 me.listarPersona(1, '', 'nombre');
@@ -40472,13 +40526,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var me = this;
 
-            axios.put('/cliente/actualizar', {
+            axios.put('/proveedor/actualizar', {
                 'nombre': this.nombre,
                 'tipo_documento': this.tipo_documento,
                 'num_documento': this.num_documento,
                 'direccion': this.direccion,
                 'telefono': this.telefono,
                 'email': this.email,
+                'contacto': this.contacto,
+                'telefono_contacto': this.telefono_contacto,
                 'id': this.persona_id
             }).then(function (response) {
                 me.cerrarModal();
@@ -40501,11 +40557,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.modal = 0;
             this.tituloModal = '';
             this.nombre = '';
-            this.tipo_documento = 'DNI';
+            this.tipo_documento = 'RUC';
             this.num_documento = '';
             this.direccion = '';
             this.telefono = '';
             this.email = '';
+            this.contacto = '';
+            this.telefono_contacto = '';
             this.errorPersona = 0;
         },
         abrirModal: function abrirModal(modelo, accion) {
@@ -40518,13 +40576,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             case 'registrar':
                                 {
                                     this.modal = 1;
-                                    this.tituloModal = 'Registrar Cliente';
+                                    this.tituloModal = 'Registrar Proveedor';
                                     this.nombre = '';
-                                    this.tipo_documento = 'DNI';
+                                    this.tipo_documento = 'RUC';
                                     this.num_documento = '';
                                     this.direccion = '';
                                     this.telefono = '';
                                     this.email = '';
+                                    this.contacto = '';
+                                    this.telefono_contacto = '';
                                     this.tipoAccion = 1;
                                     break;
                                 }
@@ -40532,7 +40592,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 {
                                     //console.log(data);
                                     this.modal = 1;
-                                    this.tituloModal = 'Actualizar Cliente';
+                                    this.tituloModal = 'Actualizar Proveedor';
                                     this.tipoAccion = 2;
                                     this.persona_id = data['id'];
                                     this.nombre = data['nombre'];
@@ -40541,6 +40601,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     this.direccion = data['direccion'];
                                     this.telefono = data['telefono'];
                                     this.email = data['email'];
+                                    this.contacto = data['contacto'];
+                                    this.telefono_contacto = data['telefono_contacto'];
                                     break;
                                 }
                         }
@@ -40554,7 +40616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 111 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -41123,6 +41185,82 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Contacto")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contacto,
+                              expression: "contacto"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Nombre del contacto"
+                          },
+                          domProps: { value: _vm.contacto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.contacto = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Teléfono de contacto")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.telefono_contacto,
+                              expression: "telefono_contacto"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Teléfono del contacto"
+                          },
+                          domProps: { value: _vm.telefono_contacto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.telefono_contacto = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "div",
                       {
@@ -41249,6 +41387,1970 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7a73e677", module.exports)
+  }
+}
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(109)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(111)
+/* template */
+var __vue_template__ = __webpack_require__(112)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Rol.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-da5f6cb0", Component.options)
+  } else {
+    hotAPI.reload("data-v-da5f6cb0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(110);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("c87b9a40", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-da5f6cb0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rol.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-da5f6cb0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rol.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            rol_id: 0,
+            nombre: '',
+            descripcion: '',
+            arrayRol: [],
+            modal: 0,
+            tituloModal: '',
+            tipoAccion: 0,
+            pagination: {
+                'total': 0,
+                'current_page': 0,
+                'per_page': 0,
+                'last_page': 0,
+                'from': 0,
+                'to': 0
+            },
+            offset: 3,
+            criterio: 'nombre',
+            buscar: ''
+        };
+    },
+
+    computed: {
+        isActived: function isActived() {
+            return this.pagination.current_page;
+        },
+        //Calcula los elementos de la paginación
+        pagesNumber: function pagesNumber() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+
+            var to = from + this.offset * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
+    methods: {
+        listarRol: function listarRol(page, buscar, criterio) {
+            var me = this;
+            var url = '/rol?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayRol = respuesta.roles.data;
+                me.pagination = respuesta.pagination;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        cambiarPagina: function cambiarPagina(page, buscar, criterio) {
+            var me = this;
+            //Actualiza la página actual
+            me.pagination.current_page = page;
+            //Envia la petición para visualizar la data de esa página
+            me.listarRol(page, buscar, criterio);
+        }
+    },
+    mounted: function mounted() {
+        this.listarRol(1, this.buscar, this.criterio);
+    }
+});
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticClass: "main" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "card" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.criterio,
+                        expression: "criterio"
+                      }
+                    ],
+                    staticClass: "form-control col-md-3",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.criterio = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "nombre" } }, [
+                      _vm._v("Nombre")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "descripcion" } }, [
+                      _vm._v("Descripción")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.buscar,
+                      expression: "buscar"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Texto a buscar" },
+                  domProps: { value: _vm.buscar },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key)
+                      ) {
+                        return null
+                      }
+                      _vm.listarRol(1, _vm.buscar, _vm.criterio)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.buscar = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        _vm.listarRol(1, _vm.buscar, _vm.criterio)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-bordered table-striped table-sm" },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.arrayRol, function(rol) {
+                  return _c("tr", { key: rol.id }, [
+                    _c("td", { domProps: { textContent: _vm._s(rol.nombre) } }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(rol.descripcion) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", [
+                      rol.condicion
+                        ? _c("div", [
+                            _c("span", { staticClass: "badge badge-success" }, [
+                              _vm._v("Activo")
+                            ])
+                          ])
+                        : _c("div", [
+                            _c("span", { staticClass: "badge badge-danger" }, [
+                              _vm._v("Desactivado")
+                            ])
+                          ])
+                    ])
+                  ])
+                })
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("nav", [
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              [
+                _vm.pagination.current_page > 1
+                  ? _c("li", { staticClass: "page-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.cambiarPagina(
+                                _vm.pagination.current_page - 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Ant")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.pagesNumber, function(page) {
+                  return _c(
+                    "li",
+                    {
+                      key: page,
+                      staticClass: "page-item",
+                      class: [page == _vm.isActived ? "active" : ""]
+                    },
+                    [
+                      _c("a", {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        domProps: { textContent: _vm._s(page) },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.cambiarPagina(page, _vm.buscar, _vm.criterio)
+                          }
+                        }
+                      })
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm.pagination.current_page < _vm.pagination.last_page
+                  ? _c("li", { staticClass: "page-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.cambiarPagina(
+                                _vm.pagination.current_page + 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Sig")]
+                      )
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ol", { staticClass: "breadcrumb" }, [
+      _c("li", { staticClass: "breadcrumb-item" }, [
+        _c("a", { attrs: { href: "/" } }, [_vm._v("Escritorio")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("i", { staticClass: "fa fa-align-justify" }),
+      _vm._v(" Roles\n            ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Estado")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-da5f6cb0", module.exports)
+  }
+}
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(114)
+}
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(116)
+/* template */
+var __vue_template__ = __webpack_require__(117)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\User.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6bbe077c", Component.options)
+  } else {
+    hotAPI.reload("data-v-6bbe077c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(115);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("38a742f6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bbe077c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6bbe077c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-content{\n    width: 100% !important;\n    position: absolute !important;\n}\n.mostrar{\n    display: list-item !important;\n    opacity: 1 !important;\n    position: absolute !important;\n    background-color: #3c29297a !important;\n}\n.div-error{\n    display: flex;\n    justify-content: center;\n}\n.text-error{\n    color: red !important;\n    font-weight: bold;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            persona_id: 0,
+            nombre: '',
+            tipo_documento: '',
+            num_documento: '',
+            direccion: '',
+            telefono: '',
+            email: '',
+            usuario: '',
+            password: '',
+            idrol: '',
+            arrayPersona: [],
+            arrayRol: [],
+            modal: 0,
+            tituloModal: '',
+            tipoAccion: 0,
+            errorPersona: 0,
+            errorMostrarMsjPersona: [],
+            pagination: {
+                'total': 0,
+                'current_page': 0,
+                'per_page': 0,
+                'last_page': 0,
+                'from': 0,
+                'to': 0
+            },
+            offset: 3,
+            criterio: 'nombre',
+            buscar: ''
+        };
+    },
+
+    computed: {
+        isActived: function isActived() {
+            return this.pagination.current_page;
+        },
+        //Calcula los elementos de la paginación
+        pagesNumber: function pagesNumber() {
+            if (!this.pagination.to) {
+                return [];
+            }
+
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1) {
+                from = 1;
+            }
+
+            var to = from + this.offset * 2;
+            if (to >= this.pagination.last_page) {
+                to = this.pagination.last_page;
+            }
+
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
+    methods: {
+        listarPersona: function listarPersona(page, buscar, criterio) {
+            var me = this;
+            var url = '/user?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
+            axios.get(url).then(function (response) {
+                var respuesta = response.data;
+                me.arrayPersona = respuesta.personas.data;
+                me.pagination = respuesta.pagination;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        selectRol: function selectRol() {
+            var me = this;
+            var url = '/rol/selectRol';
+            axios.get(url).then(function (response) {
+                //console.log(response);
+                var respuesta = response.data;
+                me.arrayRol = respuesta.roles;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        cambiarPagina: function cambiarPagina(page, buscar, criterio) {
+            var me = this;
+            //Actualiza la página actual
+            me.pagination.current_page = page;
+            //Envia la petición para visualizar la data de esa página
+            me.listarPersona(page, buscar, criterio);
+        },
+        registrarPersona: function registrarPersona() {
+            if (this.validarPersona()) {
+                return;
+            }
+
+            var me = this;
+
+            axios.post('/user/registrar', {
+                'nombre': this.nombre,
+                'tipo_documento': this.tipo_documento,
+                'num_documento': this.num_documento,
+                'direccion': this.direccion,
+                'telefono': this.telefono,
+                'email': this.email,
+                'idrol': this.idrol,
+                'usuario': this.usuario,
+                'password': this.password
+
+            }).then(function (response) {
+                me.cerrarModal();
+                me.listarPersona(1, '', 'nombre');
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        actualizarPersona: function actualizarPersona() {
+            if (this.validarPersona()) {
+                return;
+            }
+
+            var me = this;
+
+            axios.put('/user/actualizar', {
+                'nombre': this.nombre,
+                'tipo_documento': this.tipo_documento,
+                'num_documento': this.num_documento,
+                'direccion': this.direccion,
+                'telefono': this.telefono,
+                'email': this.email,
+                'idrol': this.idrol,
+                'usuario': this.usuario,
+                'password': this.password,
+                'id': this.persona_id
+            }).then(function (response) {
+                me.cerrarModal();
+                me.listarPersona(1, '', 'nombre');
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        validarPersona: function validarPersona() {
+            this.errorPersona = 0;
+            this.errorMostrarMsjPersona = [];
+
+            if (!this.nombre) this.errorMostrarMsjPersona.push("El nombre de la pesona no puede estar vacío.");
+            if (!this.usuario) this.errorMostrarMsjPersona.push("El nombre de usuario no puede estar vacío.");
+            if (!this.password) this.errorMostrarMsjPersona.push("La password del usuario no puede estar vacía.");
+            if (this.idrol == 0) this.errorMostrarMsjPersona.push("Seleccione una Role.");
+            if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
+
+            return this.errorPersona;
+        },
+        cerrarModal: function cerrarModal() {
+            this.modal = 0;
+            this.tituloModal = '';
+            this.nombre = '';
+            this.tipo_documento = 'DNI';
+            this.num_documento = '';
+            this.direccion = '';
+            this.telefono = '';
+            this.email = '';
+            this.usuario = '';
+            this.password = '';
+            this.idrol = 0;
+            this.errorPersona = 0;
+        },
+        abrirModal: function abrirModal(modelo, accion) {
+            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+            this.selectRol();
+            switch (modelo) {
+                case "persona":
+                    {
+                        switch (accion) {
+                            case 'registrar':
+                                {
+                                    this.modal = 1;
+                                    this.tituloModal = 'Registrar Usuario';
+                                    this.nombre = '';
+                                    this.tipo_documento = 'DNI';
+                                    this.num_documento = '';
+                                    this.direccion = '';
+                                    this.telefono = '';
+                                    this.email = '';
+                                    this.usuario = '';
+                                    this.password = '';
+                                    this.idrol = 0;
+                                    this.tipoAccion = 1;
+                                    break;
+                                }
+                            case 'actualizar':
+                                {
+                                    //console.log(data);
+                                    this.modal = 1;
+                                    this.tituloModal = 'Actualizar Usuario';
+                                    this.tipoAccion = 2;
+                                    this.persona_id = data['id'];
+                                    this.nombre = data['nombre'];
+                                    this.tipo_documento = data['tipo_documento'];
+                                    this.num_documento = data['num_documento'];
+                                    this.direccion = data['direccion'];
+                                    this.telefono = data['telefono'];
+                                    this.email = data['email'];
+                                    this.usuario = data['usuario'];
+                                    this.password = data['password'];
+                                    this.idrol = data['idrol'];
+                                    break;
+                                }
+                        }
+                    }
+            }
+        },
+        desactivarUsuario: function desactivarUsuario(id) {
+            var _this = this;
+
+            swal({
+                title: 'Esta seguro de desactivar este usuario?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    var me = _this;
+
+                    axios.put('/user/desactivar', {
+                        'id': id
+                    }).then(function (response) {
+                        me.listarPersona(1, '', 'nombre');
+                        swal('Desactivado!', 'El registro ha sido desactivado con éxito.', 'success');
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel) {}
+            });
+        },
+        activarUsuario: function activarUsuario(id) {
+            var _this2 = this;
+
+            swal({
+                title: 'Esta seguro de activar este usuario?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    var me = _this2;
+
+                    axios.put('/user/activar', {
+                        'id': id
+                    }).then(function (response) {
+                        me.listarPersona(1, '', 'nombre');
+                        swal('Activado!', 'El registro ha sido activado con éxito.', 'success');
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel) {}
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.listarPersona(1, this.buscar, this.criterio);
+    }
+});
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticClass: "main" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("i", { staticClass: "fa fa-align-justify" }),
+          _vm._v(" Usuarios\n                "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.abrirModal("persona", "registrar")
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "icon-plus" }),
+              _vm._v(" Nuevo\n                ")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.criterio,
+                        expression: "criterio"
+                      }
+                    ],
+                    staticClass: "form-control col-md-3",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.criterio = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "nombre" } }, [
+                      _vm._v("Nombre")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "num_documento" } }, [
+                      _vm._v("Documento")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "email" } }, [
+                      _vm._v("Email")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "telefono" } }, [
+                      _vm._v("Teléfono")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.buscar,
+                      expression: "buscar"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Texto a buscar" },
+                  domProps: { value: _vm.buscar },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key)
+                      ) {
+                        return null
+                      }
+                      _vm.listarPersona(1, _vm.buscar, _vm.criterio)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.buscar = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        _vm.listarPersona(1, _vm.buscar, _vm.criterio)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-search" }), _vm._v(" Buscar")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-bordered table-striped table-sm" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.arrayPersona, function(persona) {
+                  return _c("tr", { key: persona.id }, [
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.abrirModal("persona", "actualizar", persona)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon-pencil" })]
+                        ),
+                        _vm._v("  \n                                "),
+                        persona.condicion
+                          ? [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-sm",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.desactivarUsuario(persona.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "icon-trash" })]
+                              )
+                            ]
+                          : [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.activarUsuario(persona.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "icon-check" })]
+                              )
+                            ]
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.nombre) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.tipo_documento) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.num_documento) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.direccion) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.telefono) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.email) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.usuario) }
+                    }),
+                    _vm._v(" "),
+                    _c("td", {
+                      domProps: { textContent: _vm._s(persona.role) }
+                    })
+                  ])
+                })
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("nav", [
+            _c(
+              "ul",
+              { staticClass: "pagination" },
+              [
+                _vm.pagination.current_page > 1
+                  ? _c("li", { staticClass: "page-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.cambiarPagina(
+                                _vm.pagination.current_page - 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Ant")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.pagesNumber, function(page) {
+                  return _c(
+                    "li",
+                    {
+                      key: page,
+                      staticClass: "page-item",
+                      class: [page == _vm.isActived ? "active" : ""]
+                    },
+                    [
+                      _c("a", {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        domProps: { textContent: _vm._s(page) },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.cambiarPagina(page, _vm.buscar, _vm.criterio)
+                          }
+                        }
+                      })
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm.pagination.current_page < _vm.pagination.last_page
+                  ? _c("li", { staticClass: "page-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.cambiarPagina(
+                                _vm.pagination.current_page + 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Sig")]
+                      )
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: { mostrar: _vm.modal },
+        staticStyle: { display: "none" },
+        attrs: {
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-primary modal-lg",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h4", {
+                  staticClass: "modal-title",
+                  domProps: { textContent: _vm._s(_vm.tituloModal) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: { type: "button", "aria-label": "Close" },
+                    on: {
+                      click: function($event) {
+                        _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "form-horizontal",
+                    attrs: {
+                      action: "",
+                      method: "post",
+                      enctype: "multipart/form-data"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Nombre(*)")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.nombre,
+                              expression: "nombre"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Nombre de la persona"
+                          },
+                          domProps: { value: _vm.nombre },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.nombre = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "text-input" }
+                        },
+                        [_vm._v("Tipo documento")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.tipo_documento,
+                                expression: "tipo_documento"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.tipo_documento = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "DNI" } }, [
+                              _vm._v("DNI")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "RUC" } }, [
+                              _vm._v("RUC")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "CEDULA" } }, [
+                              _vm._v("CEDULA")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "PASS" } }, [
+                              _vm._v("PASS")
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Número documento")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.num_documento,
+                              expression: "num_documento"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "email",
+                            placeholder: "Número de documento"
+                          },
+                          domProps: { value: _vm.num_documento },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.num_documento = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Dirección")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.direccion,
+                              expression: "direccion"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "email", placeholder: "Dirección" },
+                          domProps: { value: _vm.direccion },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.direccion = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Teléfono")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.telefono,
+                              expression: "telefono"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "email", placeholder: "Teléfono" },
+                          domProps: { value: _vm.telefono },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.telefono = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Email")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.email,
+                              expression: "email"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "email", placeholder: "Email" },
+                          domProps: { value: _vm.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Role")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idrol,
+                                expression: "idrol"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idrol = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arrayRol, function(role) {
+                              return _c("option", {
+                                key: role.id,
+                                domProps: {
+                                  value: role.id,
+                                  textContent: _vm._s(role.nombre)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("Usuario")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.usuario,
+                              expression: "usuario"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Nombre del usuario"
+                          },
+                          domProps: { value: _vm.usuario },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.usuario = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-3 form-control-label",
+                          attrs: { for: "email-input" }
+                        },
+                        [_vm._v("password")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-9" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "password",
+                            placeholder: "password del usuario"
+                          },
+                          domProps: { value: _vm.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.errorPersona,
+                            expression: "errorPersona"
+                          }
+                        ],
+                        staticClass: "form-group row div-error"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "text-center text-error" },
+                          _vm._l(_vm.errorMostrarMsjPersona, function(error) {
+                            return _c("div", {
+                              key: error,
+                              domProps: { textContent: _vm._s(error) }
+                            })
+                          })
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.cerrarModal()
+                      }
+                    }
+                  },
+                  [_vm._v("Cerrar")]
+                ),
+                _vm._v(" "),
+                _vm.tipoAccion == 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.registrarPersona()
+                          }
+                        }
+                      },
+                      [_vm._v("Guardar")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.tipoAccion == 2
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.actualizarPersona()
+                          }
+                        }
+                      },
+                      [_vm._v("Actualizar")]
+                    )
+                  : _vm._e()
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ol", { staticClass: "breadcrumb" }, [
+      _c("li", { staticClass: "breadcrumb-item" }, [
+        _c("a", { attrs: { href: "/" } }, [_vm._v("Escritorio")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Opciones")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tipo Documento")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Número")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Dirección")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Teléfono")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Usuario")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Role")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6bbe077c", module.exports)
   }
 }
 
